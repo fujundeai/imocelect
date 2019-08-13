@@ -3,6 +3,7 @@ package com.example.imocelect;
 import android.app.Application;
 
 import com.example.latte_core.app.Latte;
+import com.example.latte_ec.icon.FontEcModule;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
 /**
@@ -17,6 +18,7 @@ public class ExampleApp extends Application {
     public void onCreate() {
         super.onCreate();
         Latte.init(this).withIcon(new FontAwesomeModule())
+                .withIcon(new FontEcModule())
                 .withAPIHost("http://192.168.1.110/").configure();
     }
 }
