@@ -26,9 +26,12 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:28.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation project(':latte_annotations')
+    api project(':latte_annotations')
+    api 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
+    api 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2'
 }

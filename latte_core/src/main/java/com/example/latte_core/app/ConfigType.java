@@ -4,7 +4,7 @@ package com.example.latte_core.app;
  * Created by Android Studio.
  * User: wzxai
  * Date: 2019-8-12
- * Time: 16:04
+ * Time: 17:54
  */
 public enum ConfigType {
     API_HOST, //存储域名

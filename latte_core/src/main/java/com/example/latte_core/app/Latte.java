@@ -8,7 +8,7 @@ import java.util.WeakHashMap;
  * Created by Android Studio.
  * User: wzxai
  * Date: 2019-8-12
- * Time: 15:57
+ * Time: 17:53
  */
 public final class Latte {
     public static Configuator init(Context context){
