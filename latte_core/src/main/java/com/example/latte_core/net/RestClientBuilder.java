@@ -68,12 +68,16 @@ public final class RestClientBuilder {
         this.mName = name;
         return this;
     }
-
+    /*
+    * 文件下载后存放在哪个目录
+    * */
     public final RestClientBuilder dir(String dir) {
         this.mDownloadDir = dir;
         return this;
     }
-
+    /*
+    * 后缀名
+    * */
     public final RestClientBuilder extension(String extension) {
         this.mExtension = extension;
         return this;

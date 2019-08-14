@@ -50,7 +50,10 @@ public class ExampleDelegate extends LatteDelegate {
 
                     }
                 })
+                .dir("")
+                .extension("")
                 .build()
-                .get();
+
+                .download();
     }
 }
