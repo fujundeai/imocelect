@@ -1,9 +1,10 @@
 package com.example.latte_core.app;
 
+import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
 
 import java.util.HashMap;
-import java.util.WeakHashMap;
 
 /**
  * Created by Android Studio.
@@ -12,16 +13,27 @@ import java.util.WeakHashMap;
  * Time: 17:53
  */
 public final class Latte {
-    public static Configuator init(Context context){
-        getConfigrations().put(ConfigType.APPLICATION_CONTEXT.name(),context.getApplicationContext());
-        return Configuator.getInstance();
+    public static Configurator init(Context context) {
+        Configurator.getInstance()
+                .getLatteConfigs()
+                .put(ConfigKeys.APPLICATION_CONTEXT,
+                        context.getApplicationContext());
+        return Configurator.getInstance();
     }
 
-    private static HashMap<String,Object> getConfigrations(){
-        return Configuator.getInstance().getLatteConfigs();
+    public static Configurator getConfigurator() {
+        return Configurator.getInstance();
     }
 
-    public static Context getAppoication(){
-        return (Context) getConfigrations().get(ConfigType.APPLICATION_CONTEXT.name());
+    public static <T> T getConfiguration(Object key) {
+        return getConfigurator().getConfiguration(key);
+    }
+
+    public static Application getApplicationContext() {
+        return getConfiguration(ConfigKeys.APPLICATION_CONTEXT);
+    }
+
+    public static Handler getHandler() {
+        return getConfiguration(ConfigKeys.HANDLER);
     }
 }
