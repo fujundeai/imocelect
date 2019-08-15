@@ -2,6 +2,7 @@ package com.example.latte_core.net;
 
 import com.example.latte_core.app.ConfigKeys;
 import com.example.latte_core.app.Latte;
+import com.example.latte_core.net.rx.RxRestService;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -9,13 +10,14 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  * Created by Android Studio.
  * User: wzxai
  * Date: 2019-8-13
- * Time: 16:04
+ * Time: 16:launcher_04
  */
 public final class RestCreator {
 //    /**
@@ -60,7 +62,7 @@ public final class RestCreator {
                 .baseUrl(BASE_URL)
                 .client(OKHttpHolder.OK_HTTP_CLIENT)
                 .addConverterFactory(ScalarsConverterFactory.create())
-               // .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 
@@ -76,15 +78,13 @@ public final class RestCreator {
         return RestServiceHolder.REST_SERVICE;
     }
 
-    /**
-     * Service接口
-//     */
-//    private static final class RxRestServiceHolder {
-//        private static final RxRestService REST_SERVICE =
-//                RetrofitHolder.RETROFIT_CLIENT.create(RxRestService.class);
-//    }
-//
-//    public static RxRestService getRxRestService() {
-//        return RxRestServiceHolder.REST_SERVICE;
-//    }
+
+    private static final class RxRestServiceHolder {
+        private static final RxRestService REST_SERVICE =
+                RetrofitHolder.RETROFIT_CLIENT.create(RxRestService.class);
+    }
+
+    public static RxRestService getRxRestService() {
+        return RxRestServiceHolder.REST_SERVICE;
+    }
 }

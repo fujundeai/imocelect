@@ -7,18 +7,21 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.ContentFrameLayout;
 
 import com.example.latte_core.R;
+import com.example.latte_core.R2;
 import com.example.latte_core.delegates.LatteDelegate;
 
+import butterknife.BindView;
 import me.yokeyword.fragmentation.SupportActivity;
 
 /**
  * Created by Android Studio.
  * User: wzxai
  * Date: 2019-8-13
- * Time: 14:05
+ * Time: 14:launcher_05
  * 作为这个唯一容器
  */
 public abstract class ProxyActivity extends SupportActivity {
+
     public abstract LatteDelegate setRootDelegate();
 
     @Override

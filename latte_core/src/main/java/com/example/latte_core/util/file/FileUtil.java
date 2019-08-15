@@ -37,6 +37,7 @@ import java.util.Locale;
  * Time: 15:48
  */
 public final class FileUtil {
+
     //格式化的模板
     private static final String TIME_FORMAT = "_yyyyMMdd_HHmmss";
 
