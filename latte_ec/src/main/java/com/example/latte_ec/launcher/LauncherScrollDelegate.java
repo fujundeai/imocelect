@@ -1,5 +1,6 @@
 package com.example.latte_ec.launcher;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
@@ -7,8 +8,12 @@ import androidx.annotation.Nullable;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.example.latte_core.app.AccountManager;
+import com.example.latte_core.app.IUserChecker;
 import com.example.latte_core.delegates.LatteDelegate;
+import com.example.latte_core.ui.launcher.ILauncherListener;
 import com.example.latte_core.ui.launcher.LauncherHolderCreator;
+import com.example.latte_core.ui.launcher.OnLauncherFinishTag;
 import com.example.latte_core.ui.launcher.ScrollLauncherTag;
 import com.example.latte_core.util.storage.LattePreference;
 import com.example.latte_ec.R;
@@ -25,6 +30,7 @@ import java.util.ArrayList;
 public class LauncherScrollDelegate extends LatteDelegate implements OnItemClickListener {
     private ConvenientBanner<Integer> mConvenientBanner=null;
     private static final ArrayList<Integer> INTEGERS=new ArrayList<>();
+    private ILauncherListener mLauncherListener=null;
 
     private void initBanner(){
         INTEGERS.add(R.mipmap.one);
@@ -37,6 +43,15 @@ public class LauncherScrollDelegate extends LatteDelegate implements OnItemClick
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
                 .setOnItemClickListener(this)
                 .setCanLoop(false);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        //因为在Activity中做的实现ISignListener,所以在此做一个赋值操作
+        if(activity instanceof ILauncherListener){
+            mLauncherListener= (ILauncherListener) activity;
+        }
     }
 
     @Override
@@ -56,7 +71,21 @@ public class LauncherScrollDelegate extends LatteDelegate implements OnItemClick
         if(position==INTEGERS.size()-1){
             LattePreference.setAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name(),true);
             //检查用户是否已经登录
+            AccountManager.checkAccount(new IUserChecker() {
+                @Override
+                public void onSignIn() {
+                    if(mLauncherListener!=null){
+                        mLauncherListener.onLauncherFinish(OnLauncherFinishTag.SIGNED);
+                    }
+                }
 
+                @Override
+                public void onNotSignIn() {
+                    if(mLauncherListener!=null){
+                        mLauncherListener.onLauncherFinish(OnLauncherFinishTag.NOT_SIGNED);
+                    }
+                }
+            });
         }
     }
 }
