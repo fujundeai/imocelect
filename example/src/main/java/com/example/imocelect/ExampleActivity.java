@@ -26,6 +26,7 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
         if(actionBar!=null){
             actionBar.hide();
         }
+        System.out.println();
     }
 
     @Override
