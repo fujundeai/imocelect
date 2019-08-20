@@ -63,7 +63,6 @@ public class SignUpDelegate extends LatteDelegate {
 //                            Toast.makeText(getContext(),response,Toast.LENGTH_LONG).show();
 //                            LatteLogger.json("USER_PROFILE",response);
                             SignHandler.onSignUp(response,mISignListener);
-                            System.out.println();
                         }
                     })
                     .build()

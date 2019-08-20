@@ -14,6 +14,7 @@ import com.example.latte_core.ui.launcher.ILauncherListener;
 import com.example.latte_core.ui.launcher.OnLauncherFinishTag;
 import com.example.latte_ec.launcher.LauncherDelegate;
 import com.example.latte_ec.launcher.LauncherScrollDelegate;
+import com.example.latte_ec.main.EcBottomDelegate;
 import com.example.latte_ec.sign.ISignListener;
 import com.example.latte_ec.sign.SignInDelegate;
 import com.example.latte_ec.sign.SignUpDelegate;
@@ -53,7 +54,7 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
                 break;
             case NOT_SIGNED:
                 Toast.makeText(this,"启动结束，用户没登录",Toast.LENGTH_LONG).show();
-                startWithPop(new SignUpDelegate());
+                startWithPop(new EcBottomDelegate());
                 break;
                 default:
                     break;
