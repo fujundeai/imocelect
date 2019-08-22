@@ -23,8 +23,8 @@ public class ExampleApp extends Application {
         Latte.init(this).withIcon(new FontAwesomeModule())
                 .withIcon(new FontEcModule())
                 .withLoaderDelayed(1000)
-                .withNativeApiHost("https://www.wanandroid.com/")
-                .withInterceptor(new DebugInterceptor("index",R.raw.test))
+                .withNativeApiHost("http://mock.fulingjie.com/mock/api/")
+                .withInterceptor(new DebugInterceptor("test",R.raw.test))
                 .configure();
         initStetho();
         DatabaseManager.getInstance().init(this);

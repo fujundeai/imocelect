@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
+import com.orhanobut.logger.AndroidLogAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;

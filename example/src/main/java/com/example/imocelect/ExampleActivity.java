@@ -1,6 +1,7 @@
 package com.example.imocelect;
 
 import android.os.Bundle;
+import android.service.notification.StatusBarNotification;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -19,6 +20,8 @@ import com.example.latte_ec.sign.ISignListener;
 import com.example.latte_ec.sign.SignInDelegate;
 import com.example.latte_ec.sign.SignUpDelegate;
 
+import qiu.niorgai.StatusBarCompat;
+
 public class ExampleActivity extends ProxyActivity implements ISignListener, ILauncherListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,7 +30,8 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
         if(actionBar!=null){
             actionBar.hide();
         }
-        System.out.println();
+        Latte.getConfigurator().withActivity(this);
+        StatusBarCompat.translucentStatusBar(this,true);
     }
 
     @Override
@@ -53,7 +57,7 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
                 startWithPop(new ExampleDelegate());
                 break;
             case NOT_SIGNED:
-                Toast.makeText(this,"启动结束，用户没登录",Toast.LENGTH_LONG).show();
+                //Toast.makeText(this,"启动结束，用户没登录",Toast.LENGTH_LONG).show();
                 startWithPop(new EcBottomDelegate());
                 break;
                 default:
