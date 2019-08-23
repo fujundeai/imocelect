@@ -23,7 +23,7 @@ public class ExampleApp extends Application {
         Latte.init(this).withIcon(new FontAwesomeModule())
                 .withIcon(new FontEcModule())
                 .withLoaderDelayed(1000)
-                .withNativeApiHost("http://mock.fulingjie.com/mock/api/")
+                .withNativeApiHost("http://mock.fulingjie.com/mock/")
                 .withInterceptor(new DebugInterceptor("test",R.raw.test))
                 .configure();
         initStetho();
