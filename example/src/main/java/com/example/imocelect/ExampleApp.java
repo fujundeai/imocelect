@@ -2,8 +2,10 @@ package com.example.imocelect;
 
 import android.app.Application;
 
+import com.example.imocelect.event.TestEvent;
 import com.example.latte_core.app.Latte;
 import com.example.latte_core.net.interceptors.DebugInterceptor;
+import com.example.latte_core.net.rx.AddCookieInterceptor;
 import com.example.latte_ec.database.DatabaseManager;
 import com.example.latte_ec.icon.FontEcModule;
 import com.facebook.stetho.Stetho;
@@ -25,6 +27,11 @@ public class ExampleApp extends Application {
                 .withLoaderDelayed(1000)
                 .withNativeApiHost("http://mock.fulingjie.com/mock/")
                 .withInterceptor(new DebugInterceptor("test",R.raw.test))
+                .withJavascriptInterface("latte")
+                .withWebEvent("test",new TestEvent())  //web调用原生，原生调用web操作
+                //添加cookie同步拦截器
+               // .withWebHost("https://www.baidu.com/")
+               // .withInterceptor(new AddCookieInterceptor())
                 .configure();
         initStetho();
         DatabaseManager.getInstance().init(this);

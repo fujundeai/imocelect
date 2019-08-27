@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.example.latte_core.R;
+import com.example.latte_core.util.log.LatteLogger;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,8 @@ import javax.xml.transform.Transformer;
 public class BannerCreator {
     public static void setDefault(ConvenientBanner<String> convenientBanner, ArrayList<String> banners,
                                     OnItemClickListener clickListener){
+        LatteLogger.e("TAGConvenientBanner",convenientBanner+"");
+        LatteLogger.e("TAGBanners",banners+"");
         convenientBanner.setPages(new HolderCreator(),banners)
                 .setPageIndicator(new int[]{R.drawable.dot_normal,R.drawable.dot_focus})
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)

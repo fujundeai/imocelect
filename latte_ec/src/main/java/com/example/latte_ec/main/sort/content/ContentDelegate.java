@@ -49,7 +49,7 @@ public class ContentDelegate extends LatteDelegate {
 
     private void initData(){
         RestClient.builder()
-                .url("")
+                .url("data/sort_content_data_1.json")
                 .success(new ISuccess() {
                     @Override
                     public void onSuccess(String response) {
