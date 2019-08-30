@@ -24,6 +24,11 @@ import qiu.niorgai.StatusBarCompat;
 
 public class ExampleActivity extends ProxyActivity implements ISignListener, ILauncherListener {
     @Override
+    public LatteDelegate setRootFragment() {
+        return new LauncherDelegate();
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final ActionBar actionBar=getSupportActionBar();
@@ -34,10 +39,6 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
         StatusBarCompat.translucentStatusBar(this,true);
     }
 
-    @Override
-    public LatteDelegate setRootDelegate() {
-        return new LauncherDelegate();
-    }
 
     @Override
     public void onSignInSuccess() {
@@ -54,11 +55,11 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
         switch (tag){
             case SIGNED:
                 Toast.makeText(this,"启动结束，用户登录了",Toast.LENGTH_LONG).show();
-                startWithPop(new ExampleDelegate());
+                getSupportDelegate().startWithPop(new ExampleDelegate());
                 break;
             case NOT_SIGNED:
                 //Toast.makeText(this,"启动结束，用户没登录",Toast.LENGTH_LONG).show();
-                startWithPop(new EcBottomDelegate());
+                getSupportDelegate().startWithPop(new EcBottomDelegate());
                 break;
                 default:
                     break;

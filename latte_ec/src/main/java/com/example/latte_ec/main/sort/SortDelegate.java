@@ -34,9 +34,11 @@ public class SortDelegate extends BottomItemDelegate {
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         final VerticalListDelegate listDelegate=new VerticalListDelegate();
-        loadRootFragment(R.id.vertical_list_container,listDelegate);
+        getSupportDelegate().loadRootFragment(R.id.vertical_list_container,listDelegate);
         //设置右侧第一个分类显示，默认显示分类一
-        replaceLoadRootFragment(R.id.sort_content_container,ContentDelegate.getInstance(1),false);
-
+//       replaceLoadRootFragment(R.id.sort_content_container,ContentDelegate.getInstance(1),false);
+        final ContentDelegate contentDelegate=ContentDelegate.getInstance(1);
+        getSupportDelegate().loadRootFragment(R.id.sort_content_container,contentDelegate);
+        getSupportDelegate().replaceChildFragment(contentDelegate,false);
     }
 }

@@ -6,7 +6,7 @@ package com.example.latte_core.delegates;
  * Date: 2019-8-13
  * Time: 14:44
  */
-public abstract class LatteDelegate extends PermissionCheckerDelegate {
+public abstract class LatteDelegate extends BaseDelegate {
     public <T extends LatteDelegate> T getParentDelegate(){
         return (T) getParentFragment();
     }

@@ -36,7 +36,7 @@ public class Router {
             callPhone(delegate.getContext(),url);
             return true;
         }
-        final LatteDelegate topDelegate=delegate.getTopDelegate();
+        final LatteDelegate topDelegate=delegate.getTopFragment();
 
         final WebDelegateImpl webDelegate=WebDelegateImpl.create(url);
         topDelegate.start(webDelegate);

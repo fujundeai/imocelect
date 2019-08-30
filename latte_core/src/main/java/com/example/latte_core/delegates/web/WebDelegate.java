@@ -6,6 +6,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewFragment;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.latte_core.app.ConfigKeys;
@@ -24,68 +25,82 @@ import java.lang.ref.WeakReference;
  * Time: 14:31
  */
 public abstract class WebDelegate extends LatteDelegate implements IWebViewInitializer{
-    private WebView mWebView=null;
-    private final ReferenceQueue<WebView> WEB_VIEW_QUEUE=new ReferenceQueue<>();
-    private String mUrl=null;
-    private boolean mIsWebViewAbaliable=false;
-    private LatteDelegate mTopDelegate=null;
+    private WebView mWebView = null;
+    private final ReferenceQueue<WebView> WEB_VIEW_QUEUE = new ReferenceQueue<>();
+    private String mUrl = null;
+    private boolean mIsWebViewAvailable = false;
+    private LatteDelegate mTopDelegate = null;
 
-    public WebDelegate(){
+    public WebDelegate() {
     }
 
     public abstract IWebViewInitializer setInitializer();
 
+    //处理跳转时的逻辑
+    public abstract IUrlHandler setUrlHandler();
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final Bundle args=getArguments();
-        mUrl=args.getString(RouteKeys.URL.name());
+        final Bundle args = getArguments();
+        if (args != null) {
+            mUrl = args.getString(RouteKeys.URL.name());
+        }
         initWebView();
     }
 
+    @Override
+    public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
+        final IUrlHandler handler = setUrlHandler();
+        if (handler != null) {
+            handler.handleUrl(this);
+        }
+    }
+
     @SuppressLint("JavascriptInterface")
-    private void initWebView(){
-        if(mWebView!=null){
+    private void initWebView() {
+        if (mWebView != null) {
             mWebView.removeAllViews();
             mWebView.destroy();
-        }else {
-            final IWebViewInitializer initializer=setInitializer();
-            if(initializer!=null){
-                final WeakReference<WebView> webViewWeakReference=new WeakReference<>(new WebView(getContext()),WEB_VIEW_QUEUE);
-                mWebView=webViewWeakReference.get();
-                mWebView=initializer.initWebView(mWebView);
+        } else {
+            final IWebViewInitializer initializer = setInitializer();
+            if (initializer != null) {
+                final WeakReference<WebView> webViewWeakReference =
+                        new WeakReference<>(new WebView(getContext()), WEB_VIEW_QUEUE);
+                mWebView = webViewWeakReference.get();
+                mWebView = initializer.initWebView(mWebView);
                 mWebView.setWebViewClient(initializer.initWebViewClient());
                 mWebView.setWebChromeClient(initializer.initWebChromClient());
-                final String name= Latte.getConfiguration(ConfigKeys.JAVASCRIPT_INTERFACE);
-                mWebView.addJavascriptInterface(LatteWebInterface.create(this),name);
-                mIsWebViewAbaliable=true;
-            }else {
+                final String name = Latte.getConfiguration(ConfigKeys.JAVASCRIPT_INTERFACE);
+                mWebView.addJavascriptInterface(LatteWebInterface.create(this), name);
+                mIsWebViewAvailable = true;
+            } else {
                 throw new NullPointerException("Initializer is null!");
             }
         }
     }
 
-    public void setTopDelegate(LatteDelegate delegate){
-        mTopDelegate=delegate;
+    public void setTopFragment(LatteDelegate delegate) {
+        mTopDelegate = delegate;
     }
 
-    public LatteDelegate getTopDelegate(){
-        if(mTopDelegate==null){
-            mTopDelegate=this;
+    public LatteDelegate getTopFragment() {
+        if (mTopDelegate == null) {
+            mTopDelegate = this;
         }
         return mTopDelegate;
     }
 
-    public WebView getWebView(){
-        if(mWebView==null){
-            throw new NullPointerException("WebView is Null!");
+    public WebView getWebView() {
+        if (mWebView == null) {
+            throw new NullPointerException("WebView IS NULL!");
         }
-        return mIsWebViewAbaliable ? mWebView : null;
+        return mIsWebViewAvailable ? mWebView : null;
     }
 
-    public String getUrl(){
-        if(mUrl==null){
-            throw new NullPointerException("WebView is Null");
+    public String getUrl() {
+        if (mUrl == null) {
+            throw new NullPointerException("WebView IS NULL!");
         }
         return mUrl;
     }
@@ -93,7 +108,7 @@ public abstract class WebDelegate extends LatteDelegate implements IWebViewIniti
     @Override
     public void onPause() {
         super.onPause();
-        if(mWebView!=null){
+        if (mWebView != null) {
             mWebView.onPause();
         }
     }
@@ -101,7 +116,7 @@ public abstract class WebDelegate extends LatteDelegate implements IWebViewIniti
     @Override
     public void onResume() {
         super.onResume();
-        if(mWebView!=null){
+        if (mWebView != null) {
             mWebView.onResume();
         }
     }
@@ -109,16 +124,17 @@ public abstract class WebDelegate extends LatteDelegate implements IWebViewIniti
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mIsWebViewAbaliable=false;
+        mIsWebViewAvailable = false;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mWebView!=null){
+        if (mWebView != null) {
             mWebView.removeAllViews();
             mWebView.destroy();
-            mWebView=null;
+            mWebView = null;
         }
     }
+
 }

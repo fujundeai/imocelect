@@ -36,12 +36,12 @@ public class DiscoverDelegate extends BottomItemDelegate {
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         final WebDelegateImpl delegate=WebDelegateImpl.create("index.html");
-        delegate.setTopDelegate(this.getParentDelegate());
-        loadRootFragment(R.id.web_discovery_container,delegate);
+        delegate.setTopFragment(this.getParentDelegate());
+        getSupportDelegate().loadRootFragment(R.id.web_discovery_container,delegate);
     }
 
     @Override
-    protected FragmentAnimator onCreateFragmentAnimator() {
+    public FragmentAnimator onCreateFragmentAnimator() {
         return new DefaultHorizontalAnimator();
     }
 }

@@ -20,19 +20,24 @@ import com.example.latte_core.delegates.web.route.Router;
  * Date: 2019-8-26
  * Time: 15:07
  */
-public class WebDelegateImpl extends WebDelegate {
-    private IPageLoadListener mIPageLoadListener=null;
+public class WebDelegateImpl extends WebDelegate implements IUrlHandler{
+    private IPageLoadListener mIPageLoadListener = null;
 
-    public void setPageLoadListener(IPageLoadListener listener){
-        this.mIPageLoadListener=listener;
-    }
-
-    public static WebDelegateImpl create(String url){
-        final Bundle args=new Bundle();
-        args.putString(RouteKeys.URL.name(),url);
-        final WebDelegateImpl delegate=new WebDelegateImpl();
+    public static WebDelegateImpl create(String url) {
+        final Bundle args = new Bundle();
+        args.putString(RouteKeys.URL.name(), url);
+        final WebDelegateImpl delegate = new WebDelegateImpl();
         delegate.setArguments(args);
         return delegate;
+    }
+
+    @Override
+    public Object setLayout() {
+        return getWebView();
+    }
+
+    public void setPageLoadListener(IPageLoadListener listener) {
+        this.mIPageLoadListener = listener;
     }
 
     @Override
@@ -41,17 +46,8 @@ public class WebDelegateImpl extends WebDelegate {
     }
 
     @Override
-    public Object setLayout() {
-        return getWebView();
-    }
-
-    @Override
-    public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        if(getUrl()!=null){
-            //用原生的方式模拟web跳转并进行页面加载
-            Router.getInstance().loadPage(this,getUrl());
-
-        }
+    public IUrlHandler setUrlHandler() {
+        return this;
     }
 
     @Override
@@ -61,7 +57,7 @@ public class WebDelegateImpl extends WebDelegate {
 
     @Override
     public WebViewClient initWebViewClient() {
-        final WebViewClientImpl client=new WebViewClientImpl(this);
+        final WebViewClientImpl client = new WebViewClientImpl(this);
         client.setPageLoadListener(mIPageLoadListener);
         return client;
     }
@@ -69,5 +65,14 @@ public class WebDelegateImpl extends WebDelegate {
     @Override
     public WebChromeClient initWebChromClient() {
         return new WebChromClientImpl();
+    }
+
+
+    @Override
+    public void handleUrl(WebDelegate fragment) {
+        if (getUrl() != null) {
+            //用原生的方式模拟Web跳转并进行页面加载
+            Router.getInstance().loadPage(this, getUrl());
+        }
     }
 }

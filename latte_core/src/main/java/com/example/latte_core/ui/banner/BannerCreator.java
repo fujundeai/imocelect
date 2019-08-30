@@ -1,18 +1,17 @@
 package com.example.latte_core.ui.banner;
 
-import android.widget.AdapterView;
-
-import androidx.arch.core.executor.DefaultTaskExecutor;
-import androidx.viewpager.widget.ViewPager;
-
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.example.latte_core.R;
 import com.example.latte_core.util.log.LatteLogger;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 
-import javax.xml.transform.Transformer;
+
 
 /**
  * Created by Android Studio.
@@ -22,7 +21,7 @@ import javax.xml.transform.Transformer;
  */
 public class BannerCreator {
     public static void setDefault(ConvenientBanner<String> convenientBanner, ArrayList<String> banners,
-                                    OnItemClickListener clickListener){
+                                  OnItemClickListener clickListener){
         LatteLogger.e("TAGConvenientBanner",convenientBanner+"");
         LatteLogger.e("TAGBanners",banners+"");
         convenientBanner.setPages(new HolderCreator(),banners)
